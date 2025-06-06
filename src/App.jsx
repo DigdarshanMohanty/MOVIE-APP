@@ -106,20 +106,18 @@ const App = () => {
           </h1>
           <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         </header>
-
-        <section className="all-movies">
-          {movieList.length > 0 && (
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-xl font-semibold text-white">Movies related to search</h2>
-              <button
+        {movieList.length > 0 && (
+        <center className="mb-8">
+                <button
                 onClick={scrollToFirstCard}
                 className="text-indigo-300 hover:text-white flex items-center gap-2 bg-indigo-800 px-3 py-1 rounded-full shadow-md transition-all"
-              >
+                >
                 <FaArrowDown className="text-sm" />
                 Scroll to Results
               </button>
-            </div>
-          )}
+        </center>
+        )};
+        <section className="all-movies">
 
           {isLoading ? (
             <Spinner />
