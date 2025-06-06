@@ -5,6 +5,13 @@ A React-based web application that allows users to search for movies using the O
 ## API Reference
 
 ### Get all movies
-
-```http
+``` http
 GET /?s={searchTerm}&apikey={apiKey}
+```
+
+### Get a single movie by ID
+``` http
+GET /?i={id}&apikey={apiKey}
+```
+
+
