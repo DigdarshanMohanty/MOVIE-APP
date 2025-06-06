@@ -1,9 +1,8 @@
-import { useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 
-const MovieCard = ({ movie, type = 'movie', onPageChange, direction }) => {
+const MovieCard = forwardRef(({ movie, type = 'movie', onPageChange, direction }, ref) => {
   const [showDetails, setShowDetails] = useState(false);
 
-  // If this is a pagination card
   if (type === 'pagination') {
     return (
       <div
@@ -15,7 +14,6 @@ const MovieCard = ({ movie, type = 'movie', onPageChange, direction }) => {
     );
   }
 
-  // Normal movie card starts here
   const handleCardClick = () => setShowDetails(true);
   const handleClose = () => setShowDetails(false);
 
@@ -34,6 +32,7 @@ const MovieCard = ({ movie, type = 'movie', onPageChange, direction }) => {
   return (
     <>
       <div
+        ref={ref}
         className="movie-card hover:scale-105 transition-transform duration-300 cursor-pointer"
         onClick={handleCardClick}
       >
@@ -70,7 +69,6 @@ const MovieCard = ({ movie, type = 'movie', onPageChange, direction }) => {
                 ✕
               </button>
 
-              {/* Image Section */}
               <div className="md:w-1/3 w-full flex items-center justify-center bg-gray-100 dark:bg-gray-800 p-4">
                 <img
                   src={Poster !== 'N/A' ? Poster : '/no-movie.png'}
@@ -79,7 +77,6 @@ const MovieCard = ({ movie, type = 'movie', onPageChange, direction }) => {
                 />
               </div>
 
-              {/* Info Section */}
               <div className="md:w-2/3 w-full p-6 pr-8 overflow-y-auto text-gray-800 dark:text-gray-100 space-y-6 custom-scroll font-sans">
                 <h2 className="text-4xl font-bold leading-tight tracking-tight text-indigo-600 dark:text-indigo-400">
                   {Title}
@@ -87,25 +84,25 @@ const MovieCard = ({ movie, type = 'movie', onPageChange, direction }) => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm border-b border-gray-300 dark:border-gray-700 pb-4">
                   <div>
-                    <span className="font-semibold text-gray-700 dark:text-gray-300">Released</span>
+                    <span className="font-semibold">Released</span>
                     <p>{Released || 'Unknown'}</p>
                   </div>
                   <div>
-                    <span className="font-semibold text-gray-700 dark:text-gray-300">Language</span>
+                    <span className="font-semibold">Language</span>
                     <p>{Language || 'Unknown'}</p>
                   </div>
                   <div>
-                    <span className="font-semibold text-gray-700 dark:text-gray-300">IMDb Rating</span>
+                    <span className="font-semibold">IMDb Rating</span>
                     <p>⭐ {imdbRating || 'N/A'}</p>
                   </div>
                   <div>
-                    <span className="font-semibold text-gray-700 dark:text-gray-300">IMDb ID</span>
+                    <span className="font-semibold">IMDb ID</span>
                     <p>{imdbID}</p>
                   </div>
                 </div>
 
                 <div>
-                  <h3 className="text-md font-semibold text-gray-700 dark:text-gray-300 mb-3"> Genre</h3>
+                  <h3 className="text-md font-semibold mb-3">Genre</h3>
                   <div className="flex flex-wrap gap-2">
                     {Genre
                       ? Genre.split(',').map((g, i) => (
@@ -122,8 +119,8 @@ const MovieCard = ({ movie, type = 'movie', onPageChange, direction }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-md font-semibold text-gray-700 dark:text-gray-300 mb-1">📝 Plot</h3>
-                  <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-200">
+                  <h3 className="text-md font-semibold mb-1">📝 Plot</h3>
+                  <p className="text-sm leading-relaxed">
                     {Plot || 'No plot available.'}
                   </p>
                 </div>
@@ -134,6 +131,6 @@ const MovieCard = ({ movie, type = 'movie', onPageChange, direction }) => {
       )}
     </>
   );
-};
+});
 
 export default MovieCard;

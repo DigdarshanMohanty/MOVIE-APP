@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Search from './components/search.jsx';
 import Spinner from './components/spinner.jsx';
 import MovieCard from './components/moviecard.jsx';
 import { useDebounce } from 'react-use';
+import { FaArrowDown } from 'react-icons/fa';
 
 const App = () => {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
@@ -13,6 +14,8 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
+
+  const firstCardRef = useRef(null);
 
   useDebounce(() => {
     setDebouncedSearchTerm(searchTerm.trim());
@@ -86,6 +89,12 @@ const App = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const scrollToFirstCard = () => {
+    if (firstCardRef.current) {
+      firstCardRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <main>
       <div className="pattern" />
@@ -99,7 +108,18 @@ const App = () => {
         </header>
 
         <section className="all-movies">
-          {movieList.length > 0 && <h2>Movies related to search</h2>}
+          {movieList.length > 0 && (
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-xl font-semibold text-white">Movies related to search</h2>
+              <button
+                onClick={scrollToFirstCard}
+                className="text-indigo-300 hover:text-white flex items-center gap-2 bg-indigo-800 px-3 py-1 rounded-full shadow-md transition-all"
+              >
+                <FaArrowDown className="text-sm" />
+                Scroll to Results
+              </button>
+            </div>
+          )}
 
           {isLoading ? (
             <Spinner />
@@ -110,10 +130,11 @@ const App = () => {
           ) : (
             <>
               <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {movieList.map((movie) => (
+                {movieList.map((movie, index) => (
                   <MovieCard
                     key={movie.imdbID}
                     movie={movieDetailsMap[movie.imdbID] || movie}
+                    {...(index === 0 ? { ref: firstCardRef } : {})}
                   />
                 ))}
 
