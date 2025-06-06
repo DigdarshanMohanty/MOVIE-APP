@@ -107,7 +107,7 @@ const App = () => {
           <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           
           {movieList.length > 0 && (
-            <center className='mt-4'>
+            <center className='mt-8'>
                 <button
                 onClick={scrollToFirstCard}
                 className="text-indigo-300 hover:text-white flex items-center gap-2 bg-indigo-800 px-3 py-1 rounded-full shadow-md transition-all"
@@ -121,7 +121,9 @@ const App = () => {
         <section className="all-movies">
 
           {isLoading ? (
+            <center>
             <Spinner />
+            </center>
           ) : errorMessage ? (
             <p className="text-red-500 text-center">{errorMessage}</p>
           ) : movieList.length === 0 ? (
