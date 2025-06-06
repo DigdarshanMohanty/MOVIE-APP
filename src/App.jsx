@@ -105,9 +105,9 @@ const App = () => {
             Find <span className="text-gradient">Movies</span> You'll Enjoy Without the Hassle
           </h1>
           <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        </header>
-        {movieList.length > 0 && (
-        <center className="mb-8">
+          
+          {movieList.length > 0 && (
+            <center className='mt-4'>
                 <button
                 onClick={scrollToFirstCard}
                 className="text-indigo-300 hover:text-white flex items-center gap-2 bg-indigo-800 px-3 py-1 rounded-full shadow-md transition-all"
@@ -115,8 +115,9 @@ const App = () => {
                 <FaArrowDown className="text-sm" />
                 Scroll to Results
               </button>
-        </center>
+              </center>
         )};
+        </header>
         <section className="all-movies">
 
           {isLoading ? (
