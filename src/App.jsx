@@ -20,7 +20,7 @@ const App = () => {
   useDebounce(() => {
     setDebouncedSearchTerm(searchTerm.trim());
     setCurrentPage(1);
-  }, 1500 , [searchTerm]);
+  }, 1000 , [searchTerm]);
 
   const fetchMoviesWithDetails = async (query = '', page = 1) => {
     if (!query) {
