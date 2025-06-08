@@ -1,9 +1,10 @@
+// App.jsx
 import { useEffect, useRef, useState } from 'react';
 import Search from './components/Search.jsx';
 import Spinner from './components/Spinner.jsx';
 import MovieCard from './components/Moviecard.jsx';
 import { useDebounce } from 'react-use';
-import { FaArrowDown } from 'react-icons/fa';
+import { FaArrowUp } from 'react-icons/fa';
 
 const App = () => {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
@@ -15,12 +16,12 @@ const App = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
 
-  const firstCardRef = useRef(null);
+  const allMoviesRef = useRef(null);
 
   useDebounce(() => {
     setDebouncedSearchTerm(searchTerm.trim());
     setCurrentPage(1);
-  }, 1000 , [searchTerm]);
+  }, 1000, [searchTerm]);
 
   const fetchMoviesWithDetails = async (query = '', page = 1) => {
     if (!query) {
@@ -80,6 +81,14 @@ const App = () => {
     fetchMoviesWithDetails(debouncedSearchTerm, 1);
   }, [debouncedSearchTerm]);
 
+  // Scroll the movie card section to fill screen
+  useEffect(() => {
+    if (movieList.length > 0 && allMoviesRef.current) {
+      const topOfSection = allMoviesRef.current.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: topOfSection, behavior: 'smooth' });
+    }
+  }, [movieList]);
+
   const totalPages = Math.ceil(totalResults / 10);
 
   const handlePageChange = (direction) => {
@@ -89,10 +98,8 @@ const App = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const scrollToFirstCard = () => {
-    if (firstCardRef.current) {
-      firstCardRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -105,24 +112,12 @@ const App = () => {
             Find <span className="text-gradient">Movies</span> You'll Enjoy Without the Hassle
           </h1>
           <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-          
-          {movieList.length > 0 && (
-            <center className='mt-8'>
-                <button
-                onClick={scrollToFirstCard}
-                className="text-indigo-300 hover:text-white flex items-center gap-2 bg-indigo-800 px-3 py-1 rounded-full shadow-md transition-all"
-                >
-                <FaArrowDown className="text-sm" />
-                Scroll to Results
-              </button>
-              </center>
-        )};
         </header>
-        <section className="all-movies">
 
+        <section className="all-movies min-h-screen pt-10" ref={allMoviesRef}>
           {isLoading ? (
             <center>
-            <Spinner />
+              <Spinner />
             </center>
           ) : errorMessage ? (
             <p className="text-red-500 text-center">{errorMessage}</p>
@@ -131,11 +126,10 @@ const App = () => {
           ) : (
             <>
               <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {movieList.map((movie, index) => (
+                {movieList.map((movie) => (
                   <MovieCard
                     key={movie.imdbID}
                     movie={movieDetailsMap[movie.imdbID] || movie}
-                    {...(index === 0 ? { ref: firstCardRef } : {})}
                   />
                 ))}
 
@@ -157,6 +151,14 @@ const App = () => {
                   />
                 )}
               </ul>
+
+              <button
+                onClick={scrollToTop}
+                className="fixed bottom-5 right-5 bg-white text-black px-4 py-2 rounded-full shadow-lg hover:bg-gray-200 transition-all duration-300 flex items-center gap-2"
+              >
+                <FaArrowUp />
+                Scroll to Top
+              </button>
             </>
           )}
         </section>
