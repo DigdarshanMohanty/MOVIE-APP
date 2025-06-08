@@ -1,4 +1,3 @@
-// App.jsx
 import { useEffect, useRef, useState } from 'react';
 import Search from './components/Search.jsx';
 import Spinner from './components/Spinner.jsx';
@@ -84,8 +83,9 @@ const App = () => {
   // Scroll the movie card section to fill screen
   useEffect(() => {
     if (movieList.length > 0 && allMoviesRef.current) {
-      const topOfSection = allMoviesRef.current.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({ top: topOfSection, behavior: 'smooth' });
+      const sectionTop = allMoviesRef.current.getBoundingClientRect().top + window.scrollY;
+      const scrollOffset = window.innerHeight / 8; // adds breathing space above
+      window.scrollTo({ top: sectionTop - scrollOffset, behavior: 'smooth' });
     }
   }, [movieList]);
 
@@ -95,7 +95,6 @@ const App = () => {
     const newPage = direction === 'next' ? currentPage + 1 : currentPage - 1;
     if (newPage < 1 || newPage > totalPages) return;
     fetchMoviesWithDetails(debouncedSearchTerm, newPage);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const scrollToTop = () => {
@@ -149,13 +148,15 @@ const App = () => {
                   />
                 )}
               </ul>
-              {movieList.length !==0  && (
-              <button
-                onClick={scrollToTop}
-                className="fixed bottom-5 right-5 bg-white text-black px-4 py-2 rounded-full shadow-lg hover:bg-gray-200 transition-all duration-300 flex items-center gap-2"
-              >
-                <FaArrowUp />
-              </button>)}
+
+              {movieList.length !== 0 && (
+                <button
+                  onClick={scrollToTop}
+                  className="fixed bottom-5 right-5 bg-white text-black px-4 py-2 rounded-full shadow-lg hover:bg-gray-200 transition-all duration-300 flex items-center gap-2"
+                >
+                  <FaArrowUp />
+                </button>
+              )}
             </>
           )}
         </section>
