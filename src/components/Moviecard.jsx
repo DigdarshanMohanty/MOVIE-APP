@@ -119,7 +119,7 @@ const MovieCard = forwardRef(({ movie, type = 'movie', onPageChange, direction }
                 </div>
 
                 <div>
-                  <h3 className="text-md font-semibold mb-1">📝 Plot</h3>
+                  <h3 className="text-md font-semibold mb-1">Plot</h3>
                   <p className="text-sm leading-relaxed">
                     {Plot || 'No plot available.'}
                   </p>
