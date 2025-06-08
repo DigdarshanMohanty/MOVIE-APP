@@ -22,17 +22,17 @@
 
 @layer base {
   body {
-    font-family: "DM Sans", serif;
+    font-family: "DM Sans", sans-serif;
     font-optical-sizing: auto;
-    background: #030014;
+    background-color: var(--color-primary);
   }
 
   h1 {
-    @apply mx-auto max-w-4xl text-center text-5xl font-bold leading-tight tracking-[-1%] text-white sm:text-[64px] sm:leading-[76px];
+    @apply mx-auto max-w-4xl text-center text-4xl font-bold leading-tight tracking-[-1%] text-white sm:text-5xl md:text-6xl sm:leading-[72px];
   }
 
   h2 {
-    @apply text-2xl font-bold text-white sm:text-3xl;
+    @apply text-xl font-bold text-white sm:text-2xl md:text-3xl;
   }
 
   main {
@@ -40,45 +40,45 @@
   }
 
   header {
-    @apply sm:mt-10 mt-5 mb-10;
+    @apply mt-5 sm:mt-10 mb-6 sm:mb-10 px-4;
   }
 
   header img {
-    @apply w-full max-w-lg h-auto object-contain mx-auto drop-shadow-md;
+    @apply w-full max-w-sm sm:max-w-md md:max-w-lg h-auto object-contain mx-auto drop-shadow-md;
   }
 }
 
 @layer components {
   .pattern {
-    @apply bg-hero-pattern w-full h-screen bg-center bg-cover absolute z-0;
+    @apply bg-hero-pattern w-full h-full min-h-screen bg-center bg-cover absolute z-0;
   }
 
   .wrapper {
-    @apply px-5 py-12 xs:p-10 max-w-7xl mx-auto flex flex-col relative z-10;
+    @apply px-4 sm:px-8 py-8 sm:py-12 max-w-7xl mx-auto flex flex-col relative z-10;
   }
 
   .trending {
-    @apply mt-20;
+    @apply mt-12 sm:mt-20;
 
     & ul {
-      @apply flex flex-row overflow-y-auto gap-5 -mt-10 w-full hide-scrollbar;
+      @apply flex flex-row overflow-x-auto gap-4 sm:gap-5 w-full hide-scrollbar px-2 sm:px-0;
     }
 
     & ul li {
-      @apply min-w-[230px] flex flex-row items-center;
+      @apply min-w-[200px] sm:min-w-[230px] flex flex-row items-center;
     }
 
     & ul li p {
-      @apply fancy-text mt-[22px] text-nowrap;
+      @apply fancy-text mt-6 text-nowrap text-[22vw] sm:text-[18vw] md:text-[130px] leading-none;
     }
 
     & ul li img {
-      @apply w-[127px] h-[163px] rounded-lg object-cover -ml-3.5;
+      @apply w-[100px] sm:w-[127px] h-[145px] sm:h-[163px] rounded-lg object-cover -ml-2 sm:-ml-3.5;
     }
   }
 
   .search {
-    @apply w-full bg-light-100/5 px-4 py-3 rounded-lg mt-10 max-w-3xl mx-auto;
+    @apply w-full bg-light-100/5 px-4 py-3 rounded-lg mt-8 sm:mt-10 max-w-full sm:max-w-3xl mx-auto;
 
     & div {
       @apply relative flex items-center;
@@ -89,27 +89,27 @@
     }
 
     & input {
-      @apply w-full bg-transparent py-2 sm:pr-10 pl-10 text-base text-gray-200 placeholder-light-200 outline-hidden;
+      @apply w-full bg-transparent py-2 pr-4 sm:pr-10 pl-10 text-sm sm:text-base text-gray-200 placeholder-light-200 outline-hidden;
     }
   }
 
   .all-movies {
-    @apply space-y-9;
+    @apply space-y-7 sm:space-y-9;
 
     & ul {
-      @apply grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
+      @apply grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5;
     }
   }
 
   .movie-card {
-    @apply bg-dark-100 p-5 rounded-2xl shadow-inner shadow-light-100/10;
+    @apply bg-dark-100 p-4 sm:p-5 rounded-2xl shadow-inner shadow-light-100/10 transition-all duration-300 hover:scale-[1.02];
 
     & img {
       @apply rounded-lg h-auto w-full;
     }
 
     & h3 {
-      @apply text-white font-bold text-base line-clamp-1;
+      @apply text-white font-bold text-base sm:text-lg line-clamp-1;
     }
 
     & .content {
@@ -125,31 +125,29 @@
     }
 
     & .rating p {
-      @apply font-bold text-base text-white;
+      @apply font-bold text-sm sm:text-base text-white;
     }
 
     & .content span {
-      @apply text-sm text-gray-100;
+      @apply text-xs sm:text-sm text-gray-100;
     }
 
-    & .content .lang {
-      @apply capitalize text-gray-100 font-medium text-base;
-    }
-
+        & .content .lang,
     & .content .year {
-      @apply text-gray-100 font-medium text-base;
+      @apply capitalize text-gray-100 font-medium text-sm sm:text-base;
     }
   }
 }
 
 @utility text-gradient {
-  @apply bg-linear-to-r from-[#D6C7FF] to-[#AB8BFF] bg-clip-text text-transparent;
+  @apply bg-gradient-to-r from-[#D6C7FF] to-[#AB8BFF] bg-clip-text text-transparent;
 }
 
 @utility fancy-text {
-  -webkit-text-stroke: 5px rgba(206, 206, 251, 0.5);
-  font-size: 190px;
+  -webkit-text-stroke: 4px rgba(206, 206, 251, 0.4);
+    font-size: clamp(80px, 15vw, 190px);
   font-family: "Bebas Neue", sans-serif;
+  line-height: 1;
 }
 
 @utility hide-scrollbar {
