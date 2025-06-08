@@ -121,8 +121,6 @@ const App = () => {
             </center>
           ) : errorMessage ? (
             <p className="text-red-500 text-center">{errorMessage}</p>
-          ) : movieList.length === 0 ? (
-            <p className="text-center">No movies to display</p>
           ) : (
             <>
               <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -151,14 +149,13 @@ const App = () => {
                   />
                 )}
               </ul>
-
+              {movieList.length !==0  && (
               <button
                 onClick={scrollToTop}
                 className="fixed bottom-5 right-5 bg-white text-black px-4 py-2 rounded-full shadow-lg hover:bg-gray-200 transition-all duration-300 flex items-center gap-2"
               >
                 <FaArrowUp />
-                Scroll to Top
-              </button>
+              </button>)}
             </>
           )}
         </section>
